@@ -50,7 +50,7 @@ mensilità_entry = ttk.Combobox(main_frame, values=calcoli.mesi_possibili(), fon
 mensilità_entry.current(0)
 mensilità_entry.grid(row=1, column=2, padx=10, pady=10)
 
-netto_label = tk.Label(main_frame, text='Netto', font=('Arial', 16))
+netto_label = tk.Label(main_frame, text='Netto Annuo', font=('Arial', 16))
 netto_label.grid(row=2, column=0, padx=10, pady=10)
 netto_output = tk.Text(main_frame, width=20, height=1, state="disabled", font=('Arial', 16))
 netto_output.grid(row=2, column=1, padx=10, pady=10)
