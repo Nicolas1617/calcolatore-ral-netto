@@ -71,6 +71,6 @@ def calcola_netto(RAL, mesi):
     stipendio = NETTO_ANNUO / mesi
     stipendio_approssimato = (NETTO_ANNUO - 1000) / mesi
     return {
-        "netto_annuo": round(NETTO_ANNUO,2),
-        "stipendio": round(stipendio,2)
+        "netto_annuo": round(NETTO_ANNUO, 2),
+        "stipendio": round(stipendio, 2)
     }
