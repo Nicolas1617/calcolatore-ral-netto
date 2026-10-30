@@ -1,3 +1,5 @@
+import math
+
 def richiedi_intero(messaggio):
     """
     Funzione che si assicura che il valore in input sia un intero
@@ -8,12 +10,22 @@ def richiedi_intero(messaggio):
         except ValueError:
             print("\nErrore: Devi inserire un numero intero valido. Riprova.\n")
 
+def valida_numero(valore):
+    """
+    Funzione che prende in input un valore e si assicura che sia un numero
+    """
+    try:
+        numero = float(valore.replace(',', '.'))
+        return math.isfinite(numero)
+    except ValueError:
+        return False
+
 
 def mesi_possibili():
     mesi = [
-        "12",
-        "13", # CCNL metalmeccanico
-        "14" #CCNL del commercio e terziario
+        12,
+        13, # CCNL metalmeccanico
+        14 #CCNL del commercio e terziario
     ]
     return mesi
 
@@ -57,9 +69,7 @@ def trattenute_IRPEF(IMPONIBILE):
     IRPEF_lorda = calcolo_IRPEF(IMPONIBILE)
     detrazione = calcolo_detrazione(IMPONIBILE)
     IRPEF_netta = max(0, IRPEF_lorda - detrazione)
-    #cuneo_fiscale = calcolo_cuneo_fiscale(IMPONIBILE)
     regione_comune = IMPONIBILE * 0.026
-    #trattenute = IRPEF - detrazione - cuneo_fiscale
     return IRPEF_netta + regione_comune
 
 def calcola_netto(RAL, mesi):
@@ -69,7 +79,6 @@ def calcola_netto(RAL, mesi):
     bonus_cuneo = calcolo_cuneo_fiscale(IMPONIBILE)
     NETTO_ANNUO = RAL - INPS - tasse + bonus_cuneo
     stipendio = NETTO_ANNUO / mesi
-    stipendio_approssimato = (NETTO_ANNUO - 1000) / mesi
     return {
         "netto_annuo": round(NETTO_ANNUO, 2),
         "stipendio": round(stipendio, 2)

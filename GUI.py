@@ -5,11 +5,24 @@ from tkinter import ttk, messagebox
 
 def calcolo():
     try:
-        RAL = int(ral_entry.get())
-        mesi = int(mensilità_entry.get())
-    except ValueError:
-        messagebox.showerror("Errore", "Inserisci una RAL valida e seleziona le mensilità.")
+        RAL_testo= ral_entry.get().strip() # Escludo eventuali spazi introdotti dall'utente
+        
+        if not RAL_testo:
+            raise ValueError("Inserisci un valore di RAL")
+        
+        if not calcoli.valida_numero(RAL_testo):
+            raise ValueError("Inserisci un valore numerico")
+        
+        RAL = float(RAL_testo.replace(',','.')) # Python usa i decimali con il '.' uso il replace qualora l'utente usasse la notazione con la virgola
+        
+        if RAL <= 0:
+            raise ValueError("La RAL deve essere un valore positivo")
+    
+    except ValueError as e:
+        messagebox.showerror("Errore", str(e))
         return
+    
+    mesi = int(mensilità_entry.get())
     
     risultati = calcoli.calcola_netto(RAL, mesi)
     
@@ -46,7 +59,7 @@ ral_entry.grid(row=0, column=2, padx=10, pady=10)
 mensilità = tk.Label(main_frame, text='Mensilità', font=('Arial', 16))
 mensilità.grid(row=1, column=1, padx=10, pady=10)
 
-mensilità_entry = ttk.Combobox(main_frame, values=calcoli.mesi_possibili(), font=('Arial', 16))
+mensilità_entry = ttk.Combobox(main_frame, values=calcoli.mesi_possibili(), font=('Arial', 16), state='readonly')
 mensilità_entry.current(0)
 mensilità_entry.grid(row=1, column=2, padx=10, pady=10)
 
@@ -65,6 +78,7 @@ button_frame = tk.Frame(main_frame)
 button_frame.grid(row=4, column=0, columnspan=4)
 
 calcolo_button = tk.Button(button_frame, text='Calcola', command=calcolo, font=('Arial', 16), background='lightgreen')
+main_window.bind("<Return>", lambda event: calcolo()) # Permette di usare il tasto invio per eseguire la funzione calcolo()
 calcolo_button.grid(row=0, column=1, padx=10, pady=10)
 exit_button = tk.Button(button_frame, text='Esci', command=module.uscita_gui, font=('Arial', 16), background='lightcoral')
 exit_button.grid(row=0, column=0, padx=10, pady=10)
