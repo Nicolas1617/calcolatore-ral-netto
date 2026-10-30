@@ -20,7 +20,7 @@ Capire come le tasse, le addizionali e le mensilità influenzino la busta paga i
 Non è necessario installare Python o configurare librerie sul tuo computer per usare l'applicazione:
 
 1. Vai nella sezione **[Releases](https://github.com/Nicolas1617/calcolatore-ral-netto)** sulla destra di questa pagina.
-2. Scarica l'ultima versione dell'eseguibile (es. `RAL_netto_26_10.exe`).
+2. Scarica l'ultima versione dell'eseguibile (es. `RAL_netto.exe`).
 3. Fai doppio clic sul file scaricato per avviare l'app.
 
 ---
