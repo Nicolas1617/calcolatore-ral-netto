@@ -12,7 +12,10 @@ def richiedi_intero(messaggio):
 
 def valida_numero(valore):
     """
-    Funzione che prende in input un valore e si assicura che sia un numero
+    Funzione che prende in input un valore e si assicura che sia un numero e che questo non sia infinito.
+    Fa anche una sostituzione tra virgola e punto in quanto Python per indicare un valore decimale usa il punto
+    ma nel linguaggio comune si usa la virgola.
+    Siccome ci si può aspettare che l'utente inserisca un valore contenente la virgola che genererebbe un errore quest'ultima verrà sostituita con il punto
     """
     try:
         numero = float(valore.replace(',', '.'))
@@ -22,15 +25,23 @@ def valida_numero(valore):
 
 
 def mesi_possibili():
+    """
+    Funzione che ritorna la lista di mensilità da usare nella box della GUI
+    """
     mesi = [
         12,
-        13, # CCNL metalmeccanico
-        14 #CCNL del commercio e terziario
+        13, # CCNL metalmeccanico, AIOP
+        14  # CCNL del commercio e terziario
     ]
     return mesi
 
 def calcolo_IRPEF(IMPONIBILE):
-    # Calcolo IRPEF in base agli scaglioni di reddito
+    """
+    Funzione che calcola l'IRPEF in base agli scaglioni dell'imponibie.
+
+    Input: Valore Imponibile
+    Output: Quota IRPEF
+    """
     if IMPONIBILE <= 28000:
         IRPEF = IMPONIBILE * 0.23  # Aliquota IRPEF del 23% per redditi fino a 28.000€
     elif 28000 < IMPONIBILE <= 50000:
@@ -40,7 +51,12 @@ def calcolo_IRPEF(IMPONIBILE):
     return IRPEF
 
 def calcolo_detrazione(IMPONIBILE):
-    # Calcolo detrazione IRPEF in base al RAL
+    """
+    Funzione che calcola la detrazione IRPEF in base agli scaglioni dell'imponibie.
+
+    Input: Valore Imponibile
+    Output: Detrazione IRPEF
+    """
     detrazione = 0
     if IMPONIBILE <= 15000:
         detrazione = 1955  # Detrazione per redditi fino a 15.000€
@@ -53,7 +69,12 @@ def calcolo_detrazione(IMPONIBILE):
     return detrazione
 
 def calcolo_cuneo_fiscale(IMPONIBILE):
-    # Calcolo cuneo fiscale
+    """
+    Funzione che calcola il cuneo fiscale in base agli scaglioni dell'imponibile
+    
+    Input: Valore Imponibile
+    Output: Valore del cuneo fiscale
+    """
     cuneo_fiscale = 0
     if IMPONIBILE <= 20000:
         cuneo_fiscale = IMPONIBILE * 0.053 if IMPONIBILE > 8500 else IMPONIBILE * 0.071
@@ -66,6 +87,13 @@ def calcolo_cuneo_fiscale(IMPONIBILE):
     return cuneo_fiscale
 
 def trattenute_IRPEF(IMPONIBILE):
+    """
+    Funzione che calcola le trattenute IRPEF considerando la detrazione.
+    Viene considerata un'imposta media del 2,6% per trattenute regionali e comunali
+    
+    Input: Valore Imponibile
+    Output: Trattenute IRPEF
+    """
     IRPEF_lorda = calcolo_IRPEF(IMPONIBILE)
     detrazione = calcolo_detrazione(IMPONIBILE)
     IRPEF_netta = max(0, IRPEF_lorda - detrazione)
@@ -73,7 +101,13 @@ def trattenute_IRPEF(IMPONIBILE):
     return IRPEF_netta + regione_comune
 
 def calcola_netto(RAL, mesi):
-    INPS = RAL * 0.0919
+    """
+    Funzione che calcola il netto annuo e mensile
+    
+    Input: RAL e numero di mensilità
+    Output: Netto annuo e stipendio mensile
+    """
+    INPS = RAL * 0.0919 # 9,19% va all'INPS il rimanente è l'imponibile
     IMPONIBILE = RAL - INPS
     tasse = trattenute_IRPEF(IMPONIBILE)
     bonus_cuneo = calcolo_cuneo_fiscale(IMPONIBILE)
