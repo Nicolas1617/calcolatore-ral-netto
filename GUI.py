@@ -5,7 +5,7 @@ from tkinter import ttk, messagebox
 
 def calcolo():
     try:
-        RAL_testo= ral_entry.get().strip() # Escludo eventuali spazi introdotti dall'utente
+        RAL_testo = ral_entry.get().strip() # Escludo eventuali spazi introdotti dall'utente
         
         if not RAL_testo:
             raise ValueError("Inserisci un valore di RAL")
