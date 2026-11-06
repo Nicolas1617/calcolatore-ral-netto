@@ -29,9 +29,9 @@ def mesi_possibili():
     Funzione che ritorna la lista di mensilità da usare nella box della GUI
     """
     mesi = [
-        12,
-        13, # CCNL metalmeccanico, AIOP
-        14  # CCNL del commercio e terziario
+        "12",
+        "13", # CCNL metalmeccanico, AIOP
+        "14"  # CCNL del commercio e terziario
     ]
     return mesi
 
