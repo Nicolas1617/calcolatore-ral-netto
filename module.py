@@ -17,4 +17,9 @@ def colore():
    """
    Funzione per definire un codice colore in esadecimale
    """
-   return "#f8f9fa"
+   colore = {
+       'window': '#f8f9fa',
+       'conferma': 'lightgreen',
+       'esci': 'lightcoral'
+       }
+   return colore
