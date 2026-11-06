@@ -38,9 +38,8 @@ ctk.set_default_color_theme("blue")  # Tema blu per le componenti principali
 # Definizione finestra
 main_window = ctk.CTk()
 main_window.title("Calcolo stipendio netto mensile")
-main_window.geometry("1280x720")
+main_window.geometry("1120x630")
 main_window.minsize(800, 550) # Impedisco che la finestra possa essere ridimensionata troppo piccola
-#main_window.configure(background = module.colore()) # Setto un colore per lo sfondo
 
 main_window.grid_rowconfigure(1, weight=1)
 main_window.grid_columnconfigure(0, weight=1)
@@ -49,7 +48,7 @@ main_window.grid_columnconfigure(0, weight=1)
 header_frame = ctk.CTkFrame(main_window, corner_radius=0, fg_color="transparent")
 header_frame.grid(row=0, column=0, sticky="ew", padx=30, pady=(20, 10)) # Sticky indica dove deve aderire il widget
 
-mode_switch = ctk.CTkSwitch(header_frame, text="")
+mode_switch = ctk.CTkSwitch(header_frame, text="") # Switch per passare da modalità chiara a modalità scura
 mode_switch.pack(side="right", padx=10)
 
 title_label = ctk.CTkLabel(header_frame, text="Calcolo stipendio netto mensile", font=ctk.CTkFont(family="Arial", size=28, weight="bold"))
@@ -103,7 +102,7 @@ netto_annuo_frame.pack(fill="x", padx=20, pady=(20, 10))
 netto_annuo_label = ctk.CTkLabel(netto_annuo_frame, text="NETTO ANNUO", font=ctk.CTkFont(size=13, weight="bold"), text_color="#9CA3AF")
 netto_annuo_label.pack(pady=(20, 5))
 
-netto_annuo_output = ctk.CTkLabel(netto_annuo_frame, text="--- €", font=ctk.CTkFont(size=26, weight="bold"), text_color="#FFFFFF")
+netto_annuo_output = ctk.CTkLabel(netto_annuo_frame, text="--- €", font=ctk.CTkFont(size=30, weight="bold"), text_color="#FFFFFF")
 netto_annuo_output.pack(pady=(5, 20))
 
 netto_mensile_frame = ctk.CTkFrame(results_frame, corner_radius=12, fg_color="#1E3A5F")
