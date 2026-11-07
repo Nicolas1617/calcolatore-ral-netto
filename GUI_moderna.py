@@ -52,23 +52,65 @@ header_frame.grid(row=0, column=0, sticky="ew", padx=30, pady=(20, 10)) # Sticky
 tema_corrente = ctk.get_appearance_mode().lower()
 tema_var = ctk.StringVar(value=tema_corrente)
 
-# Funzione per cambiare modalità
-def cambia_tema():
-    nuovo_tema = tema_var.get()
+def cambia_tema_personalizzato():
+    if tema_var.get() == "dark":
+        nuovo_tema = "light"
+        tema_cursore.configure(text="☀️")
+        tema_cursore.place(x=2, y=2)
+
+    else:
+        nuovo_tema = "dark"
+        tema_cursore.configure(text="🌙")
+        tema_cursore.place(x=32, y=2)
+
+    tema_var.set(nuovo_tema)
     ctk.set_appearance_mode(nuovo_tema)
+
     if nuovo_tema == "light":
         tema_label.configure(text="Modalità chiara")
     else:
         tema_label.configure(text="Modalità scura")
+
 
 # Etichetta del tema
 tema_label = ctk.CTkLabel(header_frame, text="Modalità chiara" if tema_corrente == "light" else "Modalità scura", font=ctk.CTkFont(size=13))
 tema_label.pack(side="right", padx=(10, 5))
 
 # Switch
-tema_switch = ctk.CTkSwitch(header_frame, text="", variable=tema_var, onvalue="dark", offvalue="light", command=cambia_tema)
-tema_switch.select() if tema_corrente == "dark" else tema_switch.deselect()
+tema_switch = ctk.CTkFrame(
+    header_frame,
+    width=82,
+    height=34,
+    corner_radius=18,
+    fg_color=("#D1D5DB", "#334155")
+)
+
 tema_switch.pack(side="right", padx=10)
+tema_switch.pack_propagate(False)
+
+tema_cursore = ctk.CTkLabel(
+    tema_switch,
+    text="",
+    width=30,
+    height=30,
+    corner_radius=15,
+    fg_color="#FFFFFF",
+    text_color="#111827",
+    font=ctk.CTkFont(family="Segoe UI Emoji", size=14),
+    anchor="center",
+)
+
+# Posizione iniziale
+if tema_corrente == "dark":
+    tema_cursore.configure(text="🌙")
+    tema_cursore.place(x=32, y=2)
+else:
+    tema_cursore.configure(text="☀️")
+    tema_cursore.place(x=2, y=2)
+
+tema_switch.bind("<Button-1>", lambda event: cambia_tema_personalizzato())
+
+tema_cursore.bind("<Button-1>", lambda event: cambia_tema_personalizzato())
 
 title_label = ctk.CTkLabel(header_frame, text="Calcolo stipendio netto mensile", font=ctk.CTkFont(family="Arial", size=28, weight="bold"))
 title_label.pack(anchor="w")
