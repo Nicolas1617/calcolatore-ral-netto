@@ -30,16 +30,16 @@ def calcolo():
     
     netto_mensile_output.configure(text=f"{risultati['stipendio']} €")
 
-    
-# Configurazione grafica
-ctk.set_appearance_mode("dark")  # Modalità scura
-ctk.set_default_color_theme("blue")  # Tema blu per le componenti principali
+# Configurazione tema iniziale
+ctk.set_appearance_mode("system")
+ctk.set_default_color_theme("blue")
 
 # Definizione finestra
 main_window = ctk.CTk()
-main_window.title("Calcolo stipendio netto mensile")
+main_window.title("RAL_netto")
 main_window.geometry("1120x630")
 main_window.minsize(800, 550) # Impedisco che la finestra possa essere ridimensionata troppo piccola
+main_window.configure(fg_color=("#F3F4F6", "#111827"))
 
 main_window.grid_rowconfigure(1, weight=1)
 main_window.grid_columnconfigure(0, weight=1)
@@ -48,8 +48,27 @@ main_window.grid_columnconfigure(0, weight=1)
 header_frame = ctk.CTkFrame(main_window, corner_radius=0, fg_color="transparent")
 header_frame.grid(row=0, column=0, sticky="ew", padx=30, pady=(20, 10)) # Sticky indica dove deve aderire il widget
 
-mode_switch = ctk.CTkSwitch(header_frame, text="") # Switch per passare da modalità chiara a modalità scura
-mode_switch.pack(side="right", padx=10)
+# Variabile che rappresenta la modalità iniziale
+tema_corrente = ctk.get_appearance_mode().lower()
+tema_var = ctk.StringVar(value=tema_corrente)
+
+# Funzione per cambiare modalità
+def cambia_tema():
+    nuovo_tema = tema_var.get()
+    ctk.set_appearance_mode(nuovo_tema)
+    if nuovo_tema == "light":
+        tema_label.configure(text="Modalità chiara")
+    else:
+        tema_label.configure(text="Modalità scura")
+
+# Etichetta del tema
+tema_label = ctk.CTkLabel(header_frame, text="Modalità chiara" if tema_corrente == "light" else "Modalità scura", font=ctk.CTkFont(size=13))
+tema_label.pack(side="right", padx=(10, 5))
+
+# Switch
+tema_switch = ctk.CTkSwitch(header_frame, text="", variable=tema_var, onvalue="dark", offvalue="light", command=cambia_tema)
+tema_switch.select() if tema_corrente == "dark" else tema_switch.deselect()
+tema_switch.pack(side="right", padx=10)
 
 title_label = ctk.CTkLabel(header_frame, text="Calcolo stipendio netto mensile", font=ctk.CTkFont(family="Arial", size=28, weight="bold"))
 title_label.pack(anchor="w")
@@ -65,13 +84,13 @@ content_frame.grid_columnconfigure((0, 1), weight=1)
 content_frame.grid_rowconfigure(0, weight=1)
 
 # AREA INSERIMENTO DATI
-input_frame = ctk.CTkFrame(content_frame, corner_radius=15, fg_color="#1f2937")
+input_frame = ctk.CTkFrame(content_frame, corner_radius=15, fg_color=("#FFFFFF", "#1F2937"))
 input_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 10), pady=5)
 input_title = ctk.CTkLabel(input_frame, text="Inserimento dati", font=ctk.CTkFont(family="Arial", size=22, weight="bold"))
 input_title.pack(pady=(20, 10)) # Si usa la tupla per indicare da sopra e da sotto, senza tupla indica solo da sopra
 
 # AREA RISULTATI
-results_frame = ctk.CTkFrame(content_frame, corner_radius=15, fg_color="#1f2937")
+results_frame = ctk.CTkFrame(content_frame, corner_radius=15, fg_color=("#FFFFFF", "#1F2937"))
 results_frame.grid(row=0, column=1, sticky="nsew", padx=(10, 0), pady=5)
 results_title = ctk.CTkLabel(results_frame, text="Risultati", font=ctk.CTkFont(family="Arial", size=22, weight="bold"))
 results_title.pack(pady=20)
@@ -96,25 +115,25 @@ mensilità_entry = ctk.CTkComboBox(input_frame, values=calcoli.mesi_possibili(),
 mensilità_entry.set(calcoli.mesi_possibili()[0])
 mensilità_entry.pack(pady = 5)
 
-netto_annuo_frame = ctk.CTkFrame(results_frame, corner_radius=12, fg_color="#273449")
+netto_annuo_frame = ctk.CTkFrame(results_frame, corner_radius=12, fg_color=("#E5E7EB", "#273449"))
 netto_annuo_frame.pack(fill="x", padx=20, pady=(20, 10))
 
-netto_annuo_label = ctk.CTkLabel(netto_annuo_frame, text="NETTO ANNUO", font=ctk.CTkFont(size=13, weight="bold"), text_color="#9CA3AF")
+netto_annuo_label = ctk.CTkLabel(netto_annuo_frame, text="NETTO ANNUO", font=ctk.CTkFont(size=13, weight="bold"), text_color=("#6B7280", "#9CA3AF"))
 netto_annuo_label.pack(pady=(20, 5))
 
-netto_annuo_output = ctk.CTkLabel(netto_annuo_frame, text="--- €", font=ctk.CTkFont(size=30, weight="bold"), text_color="#FFFFFF")
+netto_annuo_output = ctk.CTkLabel(netto_annuo_frame, text="--- €", font=ctk.CTkFont(size=30, weight="bold"), text_color=("#111827", "#FFFFFF"))
 netto_annuo_output.pack(pady=(5, 20))
 
-netto_mensile_frame = ctk.CTkFrame(results_frame, corner_radius=12, fg_color="#1E3A5F")
+netto_mensile_frame = ctk.CTkFrame(results_frame, corner_radius=12, fg_color=("#DBEAFE", "#1E3A5F"))
 netto_mensile_frame.pack(fill="x", padx=20, pady=10)
 
-netto_mensile_label = ctk.CTkLabel(netto_mensile_frame, text="NETTO MENSILE", font=ctk.CTkFont(size=13, weight="bold"), text_color="#BFDBFE")
+netto_mensile_label = ctk.CTkLabel(netto_mensile_frame, text="NETTO MENSILE", font=ctk.CTkFont(size=13, weight="bold"), text_color=("#1D4ED8", "#BFDBFE"))
 netto_mensile_label.pack(pady=(20, 5))
 
-netto_mensile_output = ctk.CTkLabel(netto_mensile_frame, text="--- €", font=ctk.CTkFont(size=30, weight="bold"), text_color="#FFFFFF")
+netto_mensile_output = ctk.CTkLabel(netto_mensile_frame, text="--- €", font=ctk.CTkFont(size=30, weight="bold"), text_color=("#1E3A8A", "#FFFFFF"))
 netto_mensile_output.pack(pady=(5, 20))
 
-calcolo_button = ctk.CTkButton(input_frame, text='Calcola', command=calcolo, width=250, height=45, font=ctk.CTkFont('Arial', size=16, weight="bold"), corner_radius=10)
+calcolo_button = ctk.CTkButton(input_frame, text='Calcola', command=calcolo, width=250, height=45, font=ctk.CTkFont('Arial', size=16, weight="bold"), corner_radius=10, text_color=("#FFFFFF", "#FFFFFF"))
 main_window.bind("<Return>", lambda event: calcolo()) # Permette di usare il tasto invio per eseguire la funzione calcolo()
 calcolo_button.pack(pady=35)
 """
