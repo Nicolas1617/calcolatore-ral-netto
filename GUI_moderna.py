@@ -66,7 +66,7 @@ subtitle_label.pack(anchor="w")
 content_frame = ctk.CTkFrame(main_window, fg_color="transparent")
 content_frame.grid(row=1, column=0, sticky="nsew", padx=30, pady=10)
 
-content_frame.grid_columnconfigure((0, 1), weight=1)
+content_frame.grid_columnconfigure((0, 1), weight=1, uniform="colonne") # Uniform mi assicura che i due frame siano uguali di larghezza
 content_frame.grid_rowconfigure(0, weight=1)
 
 # AREA INSERIMENTO DATI

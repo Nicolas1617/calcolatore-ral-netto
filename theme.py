@@ -28,10 +28,11 @@ def crea_switch_tema(parent, tema_label):
     tema_cursore = ctk.CTkLabel(
         tema_switch,
         text="",
-        width=30,
-        height=30,
-        corner_radius=15,
+        width=28,
+        height=28,
+        corner_radius=14,
         fg_color="#FFFFFF",
+        bg_color=("#D1D5DB", "#334155"),
         text_color="#111827",
         font=ctk.CTkFont(family="Segoe UI Emoji", size=14),
         anchor="center",
@@ -41,10 +42,10 @@ def crea_switch_tema(parent, tema_label):
     # Posizione iniziale
     if tema_corrente == "dark":
         tema_cursore.configure(text="🌙")
-        tema_cursore.place(x=32, y=2)
+        tema_cursore.place(x=30, y=3)
     else:
         tema_cursore.configure(text="☀️")
-        tema_cursore.place(x=2, y=2)
+        tema_cursore.place(x=5, y=3)
 
     # Gestisco il cambiamento del tema
     def cambia_tema(event=None):
@@ -52,12 +53,12 @@ def crea_switch_tema(parent, tema_label):
         if tema_var.get() == "dark":
             nuovo_tema = "light"
             tema_cursore.configure(text="☀️")
-            tema_cursore.place(x=2, y=2)
+            tema_cursore.place(x=5, y=3)
 
         else:
             nuovo_tema = "dark"
             tema_cursore.configure(text="🌙")
-            tema_cursore.place(x=32, y=2)
+            tema_cursore.place(x=30, y=3)
 
         tema_var.set(nuovo_tema)
         ctk.set_appearance_mode(nuovo_tema)
