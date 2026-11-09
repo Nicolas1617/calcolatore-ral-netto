@@ -1,6 +1,7 @@
 import calcoli
 import module
 import theme
+import componenti_grafici
 import customtkinter as ctk
 from CTkMessagebox import CTkMessagebox
 
@@ -66,8 +67,7 @@ main_window.grid_rowconfigure(1, weight=1)
 main_window.grid_columnconfigure(0, weight=1)
 
 # HEADER
-header_frame = ctk.CTkFrame(main_window, corner_radius=0, fg_color="transparent")
-header_frame.grid(row=0, column=0, sticky="ew", padx=30, pady=(20, 10)) # Sticky indica dove deve aderire il widget
+header_frame =componenti_grafici.crea_header(main_window, corner_radius = 0)
 
 # Etichetta del tema
 tema_label = ctk.CTkLabel(header_frame, text="", font=ctk.CTkFont(size=13))
@@ -94,33 +94,34 @@ input_frame = ctk.CTkFrame(content_frame, corner_radius=15, fg_color=("#FFFFFF",
 input_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 10), pady=5)
 input_title = ctk.CTkLabel(input_frame, text="Inserimento dati", font=ctk.CTkFont(family="Arial", size=22, weight="bold"))
 input_title.pack(pady=(20, 10)) # Si usa la tupla per indicare da sopra e da sotto, senza tupla indica solo da sopra
+input_content_frame = componenti_grafici.crea_contenitore(input_frame, expand=True) # Creo questo frame per tenere i dati centrati anche se la finestra viene massimizzata
 
 # AREA RISULTATI
 results_frame = ctk.CTkFrame(content_frame, corner_radius=15, fg_color=("#FFFFFF", "#1F2937"))
 results_frame.grid(row=0, column=1, sticky="nsew", padx=(10, 0), pady=5)
 results_title = ctk.CTkLabel(results_frame, text="Risultati", font=ctk.CTkFont(family="Arial", size=22, weight="bold"))
 results_title.pack(pady=20)
+result_content_frame = componenti_grafici.crea_contenitore(results_frame, expand=True, fill='x') # Creo questo frame per tenere i dati centrati anche se la finestra viene massimizzata
 
 # FOOTER
-footer_frame = ctk.CTkFrame(main_window, corner_radius=0, fg_color="transparent")
-footer_frame.grid(row=2, column=0, sticky="ew", padx=30, pady=(5, 15))
+footer_frame = componenti_grafici.crea_footer(main_window, row=2, corner_radius=0)
 footer_label = ctk.CTkLabel(footer_frame, text="Nota: Le addizionali regionali e comunali variano in base alla residenza. Il programma applica una trattenuta media stimata del 2,6% sull'imponibile (pari a circa il 2,3% del lordo).", font=ctk.CTkFont(family="Arial", size=12))
 footer_label.pack()
 
 # ETICHETTE E CAMPI
-ral_label = ctk.CTkLabel(input_frame, text='RAL (€)', font=ctk.CTkFont('Arial', size=16))
+ral_label = ctk.CTkLabel(input_content_frame, text='RAL (€)', font=ctk.CTkFont('Arial', size=16))
 ral_label.pack(pady = (25, 5))
-ral_entry = ctk.CTkEntry(input_frame, placeholder_text="Es. 35000", width=250, height=40, font=ctk.CTkFont('Arial', size=16), justify="center")
+ral_entry = ctk.CTkEntry(input_content_frame, placeholder_text="Es. 35000", width=250, height=40, font=ctk.CTkFont('Arial', size=16), justify="center")
 ral_entry.pack(pady = 5)
 
-mensilità = ctk.CTkLabel(input_frame, text='Mensilità', font=ctk.CTkFont('Arial', size=16))
+mensilità = ctk.CTkLabel(input_content_frame, text='Mensilità', font=ctk.CTkFont('Arial', size=16))
 mensilità.pack(pady = (25, 5))
 
-mensilità_entry = ctk.CTkComboBox(input_frame, values=calcoli.mesi_possibili(), width=250, height=40, font=ctk.CTkFont('Arial', 16), state='readonly', justify="center")
+mensilità_entry = ctk.CTkComboBox(input_content_frame, values=calcoli.mesi_possibili(), width=250, height=40, font=ctk.CTkFont('Arial', 16), state='readonly', justify="center")
 mensilità_entry.set(calcoli.mesi_possibili()[0])
 mensilità_entry.pack(pady = 5)
 
-netto_annuo_frame = ctk.CTkFrame(results_frame, corner_radius=12, fg_color=("#E5E7EB", "#273449"))
+netto_annuo_frame = ctk.CTkFrame(result_content_frame, corner_radius=12, fg_color=("#E5E7EB", "#273449"))
 netto_annuo_frame.pack(fill="x", padx=20, pady=(20, 10))
 
 netto_annuo_label = ctk.CTkLabel(netto_annuo_frame, text="NETTO ANNUO", font=ctk.CTkFont(size=13, weight="bold"), text_color=("#6B7280", "#9CA3AF"))
@@ -129,7 +130,7 @@ netto_annuo_label.pack(pady=(20, 5))
 netto_annuo_output = ctk.CTkLabel(netto_annuo_frame, text="--- €", font=ctk.CTkFont(size=30, weight="bold"), text_color=("#111827", "#FFFFFF"))
 netto_annuo_output.pack(pady=(5, 20))
 
-netto_mensile_frame = ctk.CTkFrame(results_frame, corner_radius=12, fg_color=("#DBEAFE", "#1E3A5F"))
+netto_mensile_frame = ctk.CTkFrame(result_content_frame, corner_radius=12, fg_color=("#DBEAFE", "#1E3A5F"))
 netto_mensile_frame.pack(fill="x", padx=20, pady=10)
 
 netto_mensile_label = ctk.CTkLabel(netto_mensile_frame, text="NETTO MENSILE", font=ctk.CTkFont(size=13, weight="bold"), text_color=("#1D4ED8", "#BFDBFE"))
@@ -138,7 +139,7 @@ netto_mensile_label.pack(pady=(20, 5))
 netto_mensile_output = ctk.CTkLabel(netto_mensile_frame, text="--- €", font=ctk.CTkFont(size=30, weight="bold"), text_color=("#1E3A8A", "#FFFFFF"))
 netto_mensile_output.pack(pady=(5, 20))
 
-calcolo_button = ctk.CTkButton(input_frame, text='Calcola', command=calcolo, width=250, height=45, font=ctk.CTkFont('Arial', size=16, weight="bold"), corner_radius=10, text_color=("#FFFFFF", "#FFFFFF"))
+calcolo_button = ctk.CTkButton(input_content_frame, text='Calcola', command=calcolo, width=250, height=45, font=ctk.CTkFont('Arial', size=16, weight="bold"), corner_radius=10, text_color=("#FFFFFF", "#FFFFFF"))
 calcolo_button.pack(pady=35)
 
 """
