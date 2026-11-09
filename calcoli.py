@@ -112,8 +112,12 @@ def calcola_netto(RAL, mesi):
     """
     Funzione che calcola il netto annuo e mensile
     
-    Input: RAL e numero di mensilità
-    Output: Netto annuo e stipendio mensile
+    Input:
+        - RAL
+        - Numero di mensilità
+    Output:
+        - Netto annuo
+        - Stipendio mensile
     """
     INPS = RAL * 0.0919 # 9,19% va all'INPS il rimanente è l'imponibile
     IMPONIBILE = RAL - INPS
