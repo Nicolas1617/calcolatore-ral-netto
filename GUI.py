@@ -74,7 +74,7 @@ netto_output = tk.Text(main_frame, width=20, height=1, state="disabled", font=('
 netto_output.grid(row=2, column=1, padx=10, pady=10)
 netto_output.tag_configure("center", justify="center")
 
-mese_generico_label = tk.Label(main_frame, text='Mensilità', font=('Arial', 16), background=colori['window'])
+mese_generico_label = tk.Label(main_frame, text='Netto Mensile', font=('Arial', 16), background=colori['window'])
 mese_generico_label.grid(row=2, column=2, padx=10, pady=10)
 mese_generico_output = tk.Text(main_frame, width=20, height=1, state="disabled", font=('Arial', 16))
 mese_generico_output.grid(row=2, column=3, padx=10, pady=10)
