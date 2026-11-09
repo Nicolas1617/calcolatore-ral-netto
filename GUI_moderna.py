@@ -107,8 +107,7 @@ footer_frame.grid(row=2, column=0, sticky="ew", padx=30, pady=(5, 15))
 footer_label = ctk.CTkLabel(footer_frame, text="Nota: Le addizionali regionali e comunali variano in base alla residenza. Il programma applica una trattenuta media stimata del 2,6% sull'imponibile (pari a circa il 2,3% del lordo).", font=ctk.CTkFont(family="Arial", size=12))
 footer_label.pack()
 
-
-# Etichette e campi
+# ETICHETTE E CAMPI
 ral_label = ctk.CTkLabel(input_frame, text='RAL (€)', font=ctk.CTkFont('Arial', size=16))
 ral_label.pack(pady = (25, 5))
 ral_entry = ctk.CTkEntry(input_frame, placeholder_text="Es. 35000", width=250, height=40, font=ctk.CTkFont('Arial', size=16), justify="center")
