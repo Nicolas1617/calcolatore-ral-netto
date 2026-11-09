@@ -1,5 +1,13 @@
 import math
 
+def formatta_euro(importo):
+    """
+    Funzione che serve per creare una formattazione italiana.
+    '.' per separare le migliaglia
+    ',' per seprare i decimali
+    """
+    return f"{importo:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
 def richiedi_intero(messaggio):
     """
     Funzione che si assicura che il valore in input sia un intero

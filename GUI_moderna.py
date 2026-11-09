@@ -5,9 +5,13 @@ import customtkinter as ctk
 from CTkMessagebox import CTkMessagebox
 
 def calcolo():
+    """
+    Funzione che esegue il calcolo vero e proprio del netto annuo e mensile.
+    Per eseguire il calcolo richiama altre funzioni definite in un file esterno
+    """
     try:
         RAL_testo = ral_entry.get().strip() # Escludo eventuali spazi introdotti dall'utente
-        
+
         if not RAL_testo:
             raise ValueError("Inserisci un valore di RAL")
         
@@ -27,9 +31,25 @@ def calcolo():
     
     risultati = calcoli.calcola_netto(RAL, mesi)
     
-    netto_annuo_output.configure(text=f"{risultati['netto_annuo']} €")
+    netto_annuo_output.configure(text=f"{calcoli.formatta_euro(risultati['netto_annuo'])} €")
     
-    netto_mensile_output.configure(text=f"{risultati['stipendio']} €")
+    netto_mensile_output.configure(text=f"{calcoli.formatta_euro(risultati['stipendio'])} €")
+
+def reset():
+    """
+    Costruzine di una funzione che resetti i campi riportandoli allo stato iniziale.
+    Verra richiamata tramite l'uso del tasto ESC
+    """
+    
+    ral_entry.delete(0, "end") # Cancello il campo RAL
+
+    mensilità_entry.set("12") # Ripristino le mensilità
+
+    # Azzero i risultati
+    netto_annuo_output.configure(text="--- €")
+    netto_mensile_output.configure(text="--- €")
+
+    ral_entry.focus_set() # Riporto il cursore sul campo RAL
 
 # Configurazione tema iniziale
 ctk.set_appearance_mode("system")
@@ -39,7 +59,7 @@ ctk.set_default_color_theme("blue")
 main_window = ctk.CTk()
 main_window.title("RAL_netto")
 main_window.geometry("1120x630")
-main_window.minsize(800, 550) # Impedisco che la finestra possa essere ridimensionata troppo piccola
+main_window.minsize(1040, 585) # Impedisco che la finestra possa essere ridimensionata troppo piccola
 main_window.configure(fg_color=("#F3F4F6", "#111827"))
 
 main_window.grid_rowconfigure(1, weight=1)
@@ -120,11 +140,16 @@ netto_mensile_output = ctk.CTkLabel(netto_mensile_frame, text="--- €", font=ct
 netto_mensile_output.pack(pady=(5, 20))
 
 calcolo_button = ctk.CTkButton(input_frame, text='Calcola', command=calcolo, width=250, height=45, font=ctk.CTkFont('Arial', size=16, weight="bold"), corner_radius=10, text_color=("#FFFFFF", "#FFFFFF"))
-main_window.bind("<Return>", lambda event: calcolo()) # Permette di usare il tasto invio per eseguire la funzione calcolo()
 calcolo_button.pack(pady=35)
+
 """
 exit_button = ctk.CTkButton(footer_frame, text="Esci", command=module.uscita_gui, width=120, height=40, fg_color="#DC2626", hover_color="#991B1B", corner_radius=10)
 exit_button.pack(side="right", padx=10)
 """
 
+# Creazione funzionalità tasti
+main_window.bind("<Return>", lambda event: calcolo()) # Permette di usare il tasto invio per eseguire la funzione calcolo()
+main_window.bind("<Escape>", lambda event: reset()) # Permette di usare il tasto ESC per resettare i campi
+
+main_window.after(100, lambda: ral_entry.focus_set()) # Attesa di 100 millisecondi e poi posiziona il cursore su RAL entry
 main_window.mainloop()

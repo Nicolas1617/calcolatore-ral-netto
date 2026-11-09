@@ -28,12 +28,12 @@ def calcolo():
     
     netto_output.config(state="normal")
     netto_output.delete("1.0", tk.END)
-    netto_output.insert ("1.0", f"{risultati['netto_annuo']} €", "center")
+    netto_output.insert ("1.0", f"{calcoli.formatta_euro(risultati['netto_annuo'])} €", "center")
     netto_output.config(state="disable")
     
     mese_generico_output.config(state="normal")
     mese_generico_output.delete("1.0", tk.END)
-    mese_generico_output.insert ("1.0", f"{risultati['stipendio']} €", "center")
+    mese_generico_output.insert ("1.0", f"{calcoli.formatta_euro(risultati['stipendio'])} €", "center")
     mese_generico_output.config(state="disabled")
 
     messagebox.showinfo("Info", "Nota: Le addizionali regionali e comunali variano in base alla residenza. Il programma applica una trattenuta media stimata del 2,6% sull'imponibile (pari a circa il 2,3% del lordo).")
